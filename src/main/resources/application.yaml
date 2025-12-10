@@ -21,7 +21,7 @@ logging:
 
 ---
 
-# TEST (profile ?test?)
+# TEST (profile test)
 spring:
   config:
     activate:

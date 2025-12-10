@@ -28,8 +28,8 @@ public class SaleService implements HandleDate {
 	}
 
 	public Page<SaleReportDTO> saleReportDTO (String minDate, String maxDate, String name, Pageable pageable) {
-		LocalDate max = handleMaxDate(maxDate);
-		LocalDate min = handleMinDate(minDate,max);
+		LocalDate max = handleMaxDate(maxDate); // nao chamei a variavel de "Today", chamei de max.
+		LocalDate min = handleMinDate(minDate,max); // nao chamei a variavel de "result", chamei de min.
 		String sellerName = (name == null) ? "" : name;
 
 		return repository.report(min, max, sellerName, pageable);
