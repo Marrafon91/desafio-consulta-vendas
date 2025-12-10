@@ -1,4 +1,4 @@
-package com.devsuperior.dsmeta.controllers;
+package com.devsuperior.dsmeta.controllers.handlers;
 
 import com.devsuperior.dsmeta.dto.CustomError;
 import com.devsuperior.dsmeta.services.exceptions.ResourceNotFoundException;
