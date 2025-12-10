@@ -30,9 +30,9 @@ public class SaleService {
 		return LocalDate.parse(maxDate);
 	}
 
-	private LocalDate handleMinDate(String minDate) {
+	private LocalDate handleMinDate(String minDate, LocalDate maxDate) {
 		if (minDate == null || minDate.isBlank()) {
-			return  LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+			return  maxDate.minusYears(1L);
 		}
 		return LocalDate.parse(minDate);
 	}
