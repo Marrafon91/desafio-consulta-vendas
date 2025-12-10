@@ -18,7 +18,7 @@ public class SaleController {
 	private SaleService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<SaleMinDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<SaleMinDTO> findById(@PathVariable("id") Long id) {
 		SaleMinDTO dto = service.findById(id);
 		return ResponseEntity.ok(dto);
 	}

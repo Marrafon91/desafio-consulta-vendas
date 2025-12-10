@@ -2,6 +2,7 @@ package com.devsuperior.dsmeta.services;
 
 import java.util.Optional;
 
+import com.devsuperior.dsmeta.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,9 @@ public class SaleService {
 	private SaleRepository repository;
 	
 	public SaleMinDTO findById(Long id) {
-		Optional<Sale> result = repository.findById(id);
-		Sale entity = result.get();
+		Sale entity = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Sale not Found"));
+
 		return new SaleMinDTO(entity);
 	}
 }
