@@ -2,6 +2,7 @@ package com.devsuperior.dsmeta.services;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SaleReportDTO;
+import com.devsuperior.dsmeta.dto.SaleSummaryDTO;
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
 import com.devsuperior.dsmeta.services.exceptions.ResourceNotFoundException;
@@ -46,5 +47,12 @@ public class SaleService {
 		String sellerName = (name == null) ? "" : name;
 
 		return repository.report(min, max, sellerName, pageable);
+	}
+
+	public Page<SaleSummaryDTO> summaryDTO (String minDate, String maxDate, Pageable pageable) {
+		LocalDate max = handleMaxDate(maxDate);
+		LocalDate min = handleMinDate(minDate, max);
+
+		return repository.summary(min, max, pageable);
 	}
 }
