@@ -5,18 +5,18 @@ import com.devsuperior.dsmeta.dto.SaleReportDTO;
 import com.devsuperior.dsmeta.dto.SaleSummaryDTO;
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
+import com.devsuperior.dsmeta.services.date.HandleDate;
 import com.devsuperior.dsmeta.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.List;
 
 @Service
-public class SaleService {
+public class SaleService implements HandleDate {
 
 	@Autowired
 	private SaleRepository repository;
@@ -27,20 +27,6 @@ public class SaleService {
 		return new SaleMinDTO(entity);
 	}
 
-	private LocalDate handleMaxDate(String maxDate) {
-		if (maxDate == null || maxDate.isBlank()) {
-			return LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
-		}
-		return LocalDate.parse(maxDate);
-	}
-
-	private LocalDate handleMinDate(String minDate, LocalDate maxDate) {
-		if (minDate == null || minDate.isBlank()) {
-			return  maxDate.minusYears(1L);
-		}
-		return LocalDate.parse(minDate);
-	}
-
 	public Page<SaleReportDTO> saleReportDTO (String minDate, String maxDate, String name, Pageable pageable) {
 		LocalDate max = handleMaxDate(maxDate);
 		LocalDate min = handleMinDate(minDate,max);
@@ -49,10 +35,10 @@ public class SaleService {
 		return repository.report(min, max, sellerName, pageable);
 	}
 
-	public Page<SaleSummaryDTO> summaryDTO (String minDate, String maxDate, Pageable pageable) {
+	public List<SaleSummaryDTO> summaryDTO (String minDate, String maxDate) {
 		LocalDate max = handleMaxDate(maxDate);
 		LocalDate min = handleMinDate(minDate, max);
 
-		return repository.summary(min, max, pageable);
+		return repository.summary(min, max);
 	}
 }
